@@ -210,6 +210,28 @@ In order for the system to work well, the input image must obey the following co
 
 See the project's [write-up](http://pkhungurn.github.io/talking-head-anime-3/full.html#sec:problem-spec) for more details on the input image.
 
+## Auto face detection and cropping (optional)
+
+If you don't want to manually fix face coordinates, you can use the built-in anime face detector to automatically find and crop the face area.
+
+Basic usage from the repository root (Windows PowerShell):
+
+```
+python -m tha3.animeface.detect data/images/your_image.png --print-json --out data/images/your_image_face.png --output-size 512
+```
+
+What this does:
+
+- Prints the detected face bounding boxes (and the selected one) as JSON to the console.
+- Saves a cropped, square face image to the path specified by `--out`.
+- If `--output-size` is provided, the crop is resized to NxN (e.g., 512) so it can be used directly as input.
+
+Notes:
+
+- The detector uses the bundled `lbpcascade_animeface.xml`. No additional setup is required.
+- If multiple faces are found, the largest one is chosen by default. You can change this with `--pick leftmost`.
+- If no face is detected, the script will save the original image unchanged and report `"best": null` in JSON.
+
 ## Citation
 
 If your academic work benefits from the code in this repository, please cite the project's web page as follows:
